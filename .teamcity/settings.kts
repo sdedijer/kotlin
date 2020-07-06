@@ -35,6 +35,12 @@ object Build : BuildType({
     name = "Build"
     description = "abc 123"
 
+    params {
+        password("variable123",
+                "credentialsJSON:6adb0c60-5084-4ca3-9838-63062feafeae",
+                display = ParameterDisplay.HIDDEN)
+    }
+
     id("Build")
     steps {
         script {
