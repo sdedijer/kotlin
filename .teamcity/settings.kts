@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.v2019_2.*
+import jetbrains.buildServer.configs.kotlin.v2019_2.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.v2019_2.triggers.vcs
 
 /*
@@ -33,6 +34,28 @@ project {
 object Build : BuildType({
     name = "Build"
     description = "abc 123"
+
+    id("Build")
+    steps {
+        script {
+            name = "Set version using script"
+            scriptContent = """
+      #!/bin/bash
+      HASH=%build.vcs.number%
+      SHORT_HASH=${"$"}{HASH:0:7}
+      BUILD_COUNTER=%build.counter%
+      BUILD_NUMBER="1.0${"$"}BUILD_COUNTER.${"$"}SHORT_HASH"
+      echo "##teamcity[buildNumber '${"$"}BUILD_NUMBER']"
+      """.trimIndent()
+        }
+        script {
+            name = "build"
+            scriptContent = """
+      mkdir bin
+      echo "built artifact" > bin/compiled.txt
+      """.trimIndent()
+        }
+    }
 
     vcs {
         root(DslContext.settingsRoot)
