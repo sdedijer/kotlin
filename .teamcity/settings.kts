@@ -33,7 +33,7 @@ project {
 
 object Build : BuildType({
     name = "Build"
-    description = "abc 123"
+    description = "only on new branch 123"
 
     params {
         password("variable123",
