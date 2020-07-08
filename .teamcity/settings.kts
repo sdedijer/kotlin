@@ -33,7 +33,7 @@ project {
 
 object Build : BuildType({
     name = "Build"
-    description = "abc 123 hello"
+    description = "abc 123 hello world"
 
     params {
         password("variable123",
